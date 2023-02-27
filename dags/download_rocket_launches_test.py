@@ -8,6 +8,11 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 
+
+args = {
+    'owner': 'Korsakova'
+}
+
 def _get_pictures():
     pathlib.Path("/tmp/images").mkdir(parents=True, exist_ok=True)
 
@@ -31,6 +36,7 @@ with DAG(
     dag_id="download_rocket_launches",
     start_date=airflow.utils.dates.days_ago(14),
     schedule_interval='@daily',
+    default_args= args,
 ) as dag:
 
     download_launches = BashOperator(
