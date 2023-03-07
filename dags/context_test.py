@@ -21,14 +21,11 @@ args = {
     'retry_delay': timedelta(hours=2),
 }
 
+
 def print_templates(**context):
     for i in context:
         print(f'key: {i}, value: {context[i]}, type: {type(context[i])}')
 
-    return context['data_interval_start']
-
-def _fd(**context):
-    print(f' {{ }} ')
 
 with DAG(
         dag_id='context_test',
@@ -36,7 +33,6 @@ with DAG(
         default_args=args,
         max_active_runs=1,
 ) as dag:
-
     print_templates = PythonOperator(
         task_id='print_templates',
         python_callable=print_templates,
